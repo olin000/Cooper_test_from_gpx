@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class FileloaderConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'fileloader'
+    name = 'apps.fileloader'

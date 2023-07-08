@@ -1,0 +1,19 @@
+body {
+  background-color: ivory;
+}
+
+.navbar.navbar-light.bg-light {
+  padding-top: 10px;
+  overflow: hidden;
+  background-color: beige !important;
+}
+
+.col-sm-4 {
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+.tab {
+  display: inline-block;
+  margin-left: 40px;
+}
