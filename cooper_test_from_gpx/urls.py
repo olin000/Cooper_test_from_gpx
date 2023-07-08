@@ -18,7 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic.base import TemplateView
 
+import apps.fileloader.views
+import apps.gpxreader.views
+
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="fileloader.html")),
+    path('', apps.fileloader.views.loadfile, name='fileloader'),
+    path('fileloader/', apps.fileloader.views.loadfile, name='fileloader'),
+    path('gpxreader/', apps.gpxreader.views.readgpx, name='gpxreader'),
     path('admin/', admin.site.urls),
 ]
