@@ -17,3 +17,7 @@ body {
   display: inline-block;
   margin-left: 40px;
 }
+
+.sidebar-nav {
+  font-size: 2em;
+}

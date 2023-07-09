@@ -47,7 +47,20 @@
       {% endblock %}
     </div>
     <div class="container-fluid">
-      <div class="col-sm-4">{% block body %}{% endblock %}</div>
+      <div class="col-sm-4">
+        This website allows you to analyse your gpx files from your runs. No
+        matter if you did just one 12 minute test or for example you ran a more
+        complex interval run it will help you find the fastest 12 minute
+        segment.
+        <br />
+        <a
+          href="https://en.wikipedia.org/wiki/Cooper_test#Interpretation_of_results"
+          >Interpretation of results</a
+        >
+        <br />
+        <br />
+        {% block body %} {% endblock %}
+      </div>
     </div>
   </body>
 </html>
