@@ -48,19 +48,39 @@
     </div>
     <div class="container-fluid">
       <div class="col-sm-4">
-        This website allows you to analyse your gpx files from your runs. No
-        matter if you did just one 12 minute test or for example you ran a more
-        complex interval run it will help you find the fastest 12 minute
-        segment.
+        This website generates an <u> interactive</u> chart that allows you to
+        analyse your gpx files from your runs. No matter if you did just one 12
+        minute test or you ran a more complex interval run it will help you find
+        the fastest 12 minute segment.
         <br />
         <a
           href="https://en.wikipedia.org/wiki/Cooper_test#Interpretation_of_results"
+          target="_blank"
           >Interpretation of results</a
         >
         <br />
         <br />
-        {% block body %} {% endblock %}
+        {% block body %} {% endblock %} {% block chart %} {% endblock %}
       </div>
+      <br />
+      <form action="https://www.paypal.com/donate" method="post" target="_top">
+        <input type="hidden" name="hosted_button_id" value="QHZ9BSL65X88S" />
+        <input
+          type="image"
+          src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"
+          border="0"
+          name="submit"
+          title="PayPal - The safer, easier way to pay online!"
+          alt="Donate with PayPal button"
+        />
+        <img
+          alt=""
+          border="0"
+          src="https://www.paypal.com/en_PL/i/scr/pixel.gif"
+          width="1"
+          height="1"
+        />
+      </form>
     </div>
   </body>
 </html>

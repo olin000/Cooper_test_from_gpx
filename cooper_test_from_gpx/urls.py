@@ -24,6 +24,6 @@ import apps.gpxreader.views
 urlpatterns = [
     path('', apps.fileloader.views.loadfile, name='fileloader'),
     path('fileloader/', apps.fileloader.views.loadfile, name='fileloader'),
-    path('gpxreader/', apps.gpxreader.views.readgpx, name='gpxreader'),
+    path('chart/', apps.gpxreader.views.readgpx, name='gpxreader'),
     path('admin/', admin.site.urls),
 ]

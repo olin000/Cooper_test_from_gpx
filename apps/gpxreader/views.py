@@ -1,8 +1,8 @@
 from django.shortcuts import redirect, render
 import pandas as pd
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import plotly.io as pio
 import io
 import base64
 import lib.GPX_analysis_step_complete as gpxreader
@@ -30,31 +30,35 @@ def readgpx(request):
     y1 = np.array(df['cooper_test'])[720:]
     y2 = np.array(df['cumulative_max'])[720:]
 
-    matplotlib.use('agg')
-    fig, ax = plt.subplots()
-
     max_value = df['cooper_test'].max()
     max_axis = df['cooper_test'].max() + 50
     min_value = df['cooper_test'].replace(0, np.nan).min()
     min_axis = max(min_value - 50, 0)
 
-    ax.bar(x, y1, alpha=1.0, width=1.0, color='steelblue')
-    ax.set_ylim(min_axis, max_axis)
-    ax.plot(x, y2, color='red', label='Maximum')
+    # Create bar trace
+    bar_trace = go.Bar(x=x, y=y1, marker=dict(color='steelblue'), name='Trials')
 
-    ax.text(x[df.loc[df['cooper_test'] == max_value].index[0] - 720] + 0.1, y2[-1] + 3, np.round(max_value, decimals=1),
-            color='blue')
+    # Create line trace
+    line_trace = go.Scatter(x=x, y=y2, mode='lines', line=dict(color='red'), name='Maximum')
 
-    ax.set_xlabel('Trials')
-    ax.set_ylabel('Cooper test distance (m)')
+    # Create layout
+    layout = go.Layout(xaxis=dict(title='Trials'), yaxis=dict(title='Cooper test distance (m)',
+                                                              range=[min_axis, max_axis]),
+                       legend=dict(x=0.4, y=1.2, traceorder='normal'), bargap=0, bargroupgap=0)
 
-    ax.legend(loc='lower left').get_frame().set_alpha(1.0)
+    # Add text annotation
+    index = np.where(df['cooper_test'] == max_value)[0][0] - 720
+    text_annotation = go.layout.Annotation(x=x[index] + 0.1, y=y2[-1] + 12, text=np.round(max_value, decimals=1),
+                                           showarrow=False, font=dict(color='blue'))
+    layout.annotations = [text_annotation]
 
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png')
-    buf.seek(0)
-    base64_plot = base64.b64encode(buf.getvalue()).decode('utf-8')
+    # Create figure
+    fig = go.Figure(data=[bar_trace, line_trace], layout=layout)
+    # fig.update_traces(marker_color='blue', marker_line_color='blue', selector=dict(type="bar"))
+    fig.update_traces(marker_line_width=0)
 
-    return render(request, 'gpxreader.html', {
-        'base64_plot': base64_plot,
+    chart = fig.to_html()
+
+    return render(request, 'chart.html', {
+        'chart': chart,
     })
