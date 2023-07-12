@@ -6,8 +6,11 @@ import lib.GPX_analysis_step_complete as gpxreader
 def loadfile(request):
     if request.method == 'POST':
         gpxfile = request.FILES['gpxfile']
-        df = gpxreader.readgpx(gpxfile)
-        df_json = df.to_json(orient='records')
-        request.session['df_json'] = df_json
-        return redirect('gpxreader')
+        df, isLoaded = gpxreader.readgpx(gpxfile)
+        if isLoaded:
+            df_json = df.to_json(orient='records')
+            request.session['df_json'] = df_json
+            return redirect('gpxreader')
+        else:
+            return render(request, 'fileloader.html', {'error': 'File not loaded, please check the file format'})
     return render(request, 'fileloader.html')
