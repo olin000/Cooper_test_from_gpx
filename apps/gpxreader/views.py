@@ -53,9 +53,11 @@ def readgpx(request):
 
         # Add text annotation
         index = np.where(df['cooper_test'] == max_value)[0][0] - 720
-        # text_annotation = go.layout.Annotation(x=x[index] + 0.1, y=y2[-1] + 12, text=np.round(max_value, decimals=1),
-        #                                        showarrow=False, font=dict(color='blue'))
-        # layout.annotations = [text_annotation]
+        if index >= 0:
+            text_annotation = go.layout.Annotation(x=x[index] + 0.1, y=y2[-1] + 12,
+                                                   text=np.round(max_value,
+                                                                 decimals=1), showarrow=False, font=dict(color='blue'))
+            layout.annotations = [text_annotation]
 
         # Create figure
         fig = go.Figure(data=[bar_trace, line_trace], layout=layout)
