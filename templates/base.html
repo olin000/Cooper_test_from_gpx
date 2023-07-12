@@ -60,9 +60,11 @@
         >
         <br />
         <br />
-        {% block body %} {% endblock %} {% block chart %} {% endblock %}
+        {% block body %} {% endblock %} {% block error %}
+        <p style="color: red">{{error}}</p>
+        {% endblock %} <br />
+        {% block chart %} {% endblock %}
       </div>
-      <br />
       <form action="https://www.paypal.com/donate" method="post" target="_top">
         <input type="hidden" name="hosted_button_id" value="QHZ9BSL65X88S" />
         <input

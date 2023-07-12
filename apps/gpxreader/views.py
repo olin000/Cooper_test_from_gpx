@@ -13,10 +13,14 @@ import lib.GPX_analysis_step_complete as gpxreader
 def readgpx(request):
     if request.method == 'POST':
         gpxfile = request.FILES['gpxfile']
-        df = gpxreader.readgpx(gpxfile)
-        df_json = df.to_json(orient='records')
-        request.session['df_json'] = df_json
-        return redirect('gpxreader')
+        gpxfile = request.FILES['gpxfile']
+        df, isLoaded = gpxreader.readgpx(gpxfile)
+        if isLoaded:
+            df_json = df.to_json(orient='records')
+            request.session['df_json'] = df_json
+            return redirect('gpxreader')
+        else:
+            return render(request, 'fileloader.html', {'error': 'File not loaded, please check the file format'})
     if 'df_json' in request.session:
         df_json = request.session['df_json']
         df = pd.read_json(df_json, orient='records')
@@ -49,9 +53,9 @@ def readgpx(request):
 
         # Add text annotation
         index = np.where(df['cooper_test'] == max_value)[0][0] - 720
-        text_annotation = go.layout.Annotation(x=x[index] + 0.1, y=y2[-1] + 12, text=np.round(max_value, decimals=1),
-                                               showarrow=False, font=dict(color='blue'))
-        layout.annotations = [text_annotation]
+        # text_annotation = go.layout.Annotation(x=x[index] + 0.1, y=y2[-1] + 12, text=np.round(max_value, decimals=1),
+        #                                        showarrow=False, font=dict(color='blue'))
+        # layout.annotations = [text_annotation]
 
         # Create figure
         fig = go.Figure(data=[bar_trace, line_trace], layout=layout)
