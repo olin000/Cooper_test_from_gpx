@@ -36,9 +36,10 @@ def readgpx(request):
         y2 = np.array(df['cumulative_max'])[720:]
 
         max_value = df['cooper_test'].max()
-        max_axis = df['cooper_test'].max() + 50
+        max_axis = max_value * 1.01
         min_value = df['cooper_test'].replace(0, np.nan).min()
-        min_axis = max(min_value - 50, 0)
+        min_axis = max(min_value * 0.98, 0)
+        VO2Max = (max_value - 504.9) / 44.73
 
         # Create bar trace
         bar_trace = go.Bar(x=x, y=y1, marker=dict(color='steelblue'), name='Trials')
@@ -49,14 +50,14 @@ def readgpx(request):
         # Create layout
         layout = go.Layout(xaxis=dict(title='Trials'), yaxis=dict(title='Cooper test distance (m)',
                                                                   range=[min_axis, max_axis]),
-                           legend=dict(x=0.4, y=1.2, traceorder='normal'), bargap=0, bargroupgap=0)
+                           legend=dict(x=0.75, y=1.2, traceorder='reversed'), bargap=0, bargroupgap=0,
+                           title=f"VO2Max estimated at {np.round(VO2Max, decimals=0)}")
 
         # Add text annotation
         index = np.where(df['cooper_test'] == max_value)[0][0] - 720
         if index >= 0:
-            text_annotation = go.layout.Annotation(x=x[index] + 0.1, y=y2[-1] + 12,
-                                                   text=np.round(max_value,
-                                                                 decimals=1), showarrow=False, font=dict(color='blue'))
+            text_annotation = go.layout.Annotation(x=x[index], y=y2[-1], text=np.round(max_value, decimals=1),
+                                                   showarrow=True, font=dict(color='blue'))
             layout.annotations = [text_annotation]
 
         # Create figure
