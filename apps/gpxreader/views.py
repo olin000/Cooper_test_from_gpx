@@ -39,7 +39,7 @@ def readgpx(request):
         max_axis = max_value * 1.01
         min_value = df['cooper_test'].replace(0, np.nan).min()
         min_axis = max(min_value * 0.98, 0)
-        VO2Max = (max_value - 504.9) / 44.73
+        VO2max = (max_value - 504.9) / 44.73
 
         # Create bar trace
         bar_trace = go.Bar(x=x, y=y1, marker=dict(color='steelblue'), name='Trials')
@@ -51,7 +51,7 @@ def readgpx(request):
         layout = go.Layout(xaxis=dict(title='Trials'), yaxis=dict(title='Cooper test distance (m)',
                                                                   range=[min_axis, max_axis]),
                            legend=dict(x=0.75, y=1.2, traceorder='reversed'), bargap=0, bargroupgap=0,
-                           title=f"VO2Max estimated at {np.round(VO2Max, decimals=0)}")
+                           title=f"VO2max estimated at {np.round(VO2max, decimals=0)}")
 
         # Add text annotation
         index = np.where(df['cooper_test'] == max_value)[0][0] - 720
