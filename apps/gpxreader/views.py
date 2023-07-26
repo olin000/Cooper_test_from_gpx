@@ -6,6 +6,8 @@ import plotly.io as pio
 import io
 import base64
 import lib.GPX_analysis_step_complete as gpxreader
+import logging
+import datetime
 
 # Create your views here.
 
@@ -22,6 +24,9 @@ def readgpx(request):
         else:
             return render(request, 'fileloader.html', {'error': 'File not loaded, please check the file format'})
     if 'df_json' in request.session:
+        db_logger = logging.getLogger('db')
+        db_logger.info('GPX reader file loaded at ' + str(datetime.datetime.now()))
+
         df_json = request.session['df_json']
         df = pd.read_json(df_json, orient='records')
         df['offset_distance_cumsum'] = df.iloc[:, 2].shift(720).fillna(0)
