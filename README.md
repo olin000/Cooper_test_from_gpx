@@ -1,0 +1,2 @@
+This is a source code of a website/Django project that generates an interactive chart that allows a user to analyse gpx files from their runs. No matter if they did just one 12 minute test or they ran a more complex interval run it will help them find the fastest 12 minute segment.
+The website is available at: https://coopertestfromgpx.com/
