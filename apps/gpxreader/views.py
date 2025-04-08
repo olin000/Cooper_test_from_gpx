@@ -16,6 +16,7 @@ def readgpx(request):
     if request.method == 'POST':
         gpxfile = request.FILES['gpxfile']
         gpxfile = request.FILES['gpxfile']
+        messages.info(request, 'File processing has started. Please wait...')
         df, isLoaded = gpxreader.readgpx(gpxfile)
         if isLoaded:
             df_json = df.to_json(orient='records')
@@ -25,14 +26,16 @@ def readgpx(request):
             return render(request, 'fileloader.html', {'error': 'File not loaded, please check the file format'})
     if 'df_json' in request.session:
         db_logger = logging.getLogger('db')
-        db_logger.info('GPX reader file loaded at ' + str(datetime.datetime.now()))
+        db_logger.info('GPX reader file loaded at ' +
+                       str(datetime.datetime.now()))
 
         df_json = request.session['df_json']
         df = pd.read_json(df_json, orient='records')
         df['offset_distance_cumsum'] = df.iloc[:, 2].shift(720).fillna(0)
         df['cooper_test'] = 0
         mask = df['time_cumsum'] > 720
-        df.loc[mask, 'cooper_test'] = df['distance_cumsum'] - df['offset_distance_cumsum']
+        df.loc[mask, 'cooper_test'] = df['distance_cumsum'] - \
+            df['offset_distance_cumsum']
         df['cumulative_max'] = df['cooper_test'].cummax()
         # df.to_csv('output.csv', sep=',', index=False, header=False)
 
@@ -47,10 +50,12 @@ def readgpx(request):
         VO2max = (max_value - 504.9) / 44.73
 
         # Create bar trace
-        bar_trace = go.Bar(x=x, y=y1, marker=dict(color='steelblue'), name='Trials')
+        bar_trace = go.Bar(x=x, y=y1, marker=dict(
+            color='steelblue'), name='Trials')
 
         # Create line trace
-        line_trace = go.Scatter(x=x, y=y2, mode='lines', line=dict(color='red'), name='Maximum')
+        line_trace = go.Scatter(x=x, y=y2, mode='lines',
+                                line=dict(color='red'), name='Maximum')
 
         # Create layout
         layout = go.Layout(xaxis=dict(title='Trials'), yaxis=dict(title='Cooper test distance (m)',

@@ -7,4 +7,15 @@
   <br />
   <input type="submit" name="submit" value="Upload gpx" />
 </form>
-{% endblock %}
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li class="{{ message.tags }}">{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% if gpxfile %}
+<h2>File uploaded successfully!</h2>
+<p>File name: {{ gpxfile.name }}</p>
+<p>File size: {{ gpxfile.size }} bytes</p>
+<p>File type: {{ gpxfile.content_type }}</p>
+{% endif %} {% endblock %}
