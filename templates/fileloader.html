@@ -1,21 +1,24 @@
 {% extends "base.html" %} {% block body %}
 
-<form method="post" enctype="multipart/form-data">
+<form id="upload-form" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <input type="file" name="gpxfile" accept=".gpx" required />
   <br />
   <br />
   <input type="submit" name="submit" value="Upload gpx" />
 </form>
-{% if messages %}
-<ul class="messages">
-  {% for message in messages %}
-  <li class="{{ message.tags }}">{{ message }}</li>
-  {% endfor %}
-</ul>
-{% endif %} {% if gpxfile %}
-<h2>File uploaded successfully!</h2>
-<p>File name: {{ gpxfile.name }}</p>
-<p>File size: {{ gpxfile.size }} bytes</p>
-<p>File type: {{ gpxfile.content_type }}</p>
-{% endif %} {% endblock %}
+
+<div id="message" style="display: none">
+  Processing the file, please wait...
+</div>
+<script>
+  document
+    .getElementById("upload-form")
+    .addEventListener("submit", function (e) {
+      // Show the processing message
+      document.getElementById("message").style.display = "block";
+      // Allow the form to continue submitting
+    });
+</script>
+
+{% endblock %}

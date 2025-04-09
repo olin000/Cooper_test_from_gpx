@@ -2,9 +2,6 @@ from django.shortcuts import redirect, render
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import plotly.io as pio
-import io
-import base64
 import lib.GPX_analysis_step_complete as gpxreader
 import logging
 import datetime
@@ -15,8 +12,6 @@ import datetime
 def readgpx(request):
     if request.method == 'POST':
         gpxfile = request.FILES['gpxfile']
-        gpxfile = request.FILES['gpxfile']
-        messages.info(request, 'File processing has started. Please wait...')
         df, isLoaded = gpxreader.readgpx(gpxfile)
         if isLoaded:
             df_json = df.to_json(orient='records')
