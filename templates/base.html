@@ -67,6 +67,7 @@
         {% endblock %} <br />
         {% block chart %} {% endblock %}
       </div>
+  <br><strong>Paypal:</strong>
       <form action="https://www.paypal.com/donate" method="post" target="_top">
         <input type="hidden" name="hosted_button_id" value="QHZ9BSL65X88S" />
         <input
@@ -78,6 +79,34 @@
           alt="Donate with PayPal button"
         />
       </form>
-    </div>
+<!-- Crypto Donations (minimal version) -->
+<div style="font-size: 14px;">
+  <strong>Or donate crypto:</strong><br>
+
+  <!-- Ethereum / Base -->
+  <div style="margin-bottom: 2px;">
+    <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" width="24" height="24" style="vertical-align: middle;">
+    <strong>Ethereum / Base:</strong><br>
+    <code id="eth-address" style="word-break: break-all;">0xBA1903cEb50F92dDBde94498D14cdCc31fEFB7f9</code>
+    <button onclick="copyToClipboard('eth-address')" style="margin-left: 10px; font-size: 12px;">Copy</button>
+  </div>
+
+  <!-- Solana -->
+  <div>
+    <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" width="24" height="24" style="vertical-align: middle;">
+    <strong>Solana:</strong><br>
+    <code id="sol-address" style="word-break: break-all;">GrXWomqeGMzAcCCbYQ1Qq32t9qtsrsr4bTZTNcar1QLQ</code>
+    <button onclick="copyToClipboard('sol-address')" style="margin-left: 10px; font-size: 12px;">Copy</button>
+  </div>
+
+  <script>
+    function copyToClipboard(id) {
+      const text = document.getElementById(id).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Copied to clipboard!');
+      });
+    }
+  </script>
+</div>
   </body>
 </html>
