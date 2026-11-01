@@ -7,106 +7,123 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <meta name="description" content="" />
+    <meta name="description" content="Analyse GPX files to find your fastest 12-minute Cooper test segment" />
     <meta name="author" content="" />
 
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}Cooper Test from GPX{% endblock %}</title>
     {% load static %}
     <link
       rel="icon"
       type="image/x-icon"
-      href="{% static '/images/favicon.ico'%}"
+      href="{% static '/images/favicon.ico' %}"
     />
 
-    <!-- Page level plugin CSS-->
+    <!-- Bootstrap 5 CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
-    {% comment %}
-    <script
-      type="text/javascript"
-      src="http://127.0.0.1:35729/livereload.js"
-    ></script>
-    {% endcomment %}
 
-    <link rel="stylesheet" href="{% static 'css/base.css'%}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" type="text/css" />
 
-    {% block links %} {% endblock %}
+    {% block links %}{% endblock %}
   </head>
 
   <body>
-    <div class="navbar navbar-light bg-light">
+    <div class="navbar navbar-light bg-light px-3 shadow-sm mb-3">
       {% block sidebar %}
-      <ul class="sidebar-nav">
-        <b style="color: #0084ff; font-weight: bold; font-style: italic">
-          Cooper test from gpx
-        </b>
-        <span class="tab"></span>
-      </ul>
+      <span class="navbar-brand mb-0 h1" style="color: #0084ff; font-weight: bold; font-style: italic">
+        Cooper test from GPX
+      </span>
       {% endblock %}
     </div>
-    <div class="container-fluid">
-      <div class="col-sm-4">
-        This website generates an <u> interactive</u> chart that allows you to
-        analyse your gpx files from your runs. No matter if you did just one 12
-        minute test or you ran a more complex interval run it will help you find
-        the fastest 12 minute segment.
-        <br />
-        <a
-          href="https://en.wikipedia.org/wiki/Cooper_test#Interpretation_of_results"
-          target="_blank"
-          >Interpretation of results</a
-        >
-        <br />
-        <br />
-        {% block body %} {% endblock %} {% block error %}
-        <p style="color: red">{{error}}</p>
-        {% endblock %} <br />
-        {% block chart %} {% endblock %}
+
+    <div class="container-fluid px-4">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+          <p>
+            This website generates an <u>interactive</u> chart that allows you to
+            analyse your GPX files from your runs. No matter if you did just one 12-minute
+            test or a more complex interval workout, it will help you find
+            the fastest 12-minute segment.
+          </p>
+          <p>
+            <a
+              href="https://en.wikipedia.org/wiki/Cooper_test#Interpretation_of_results"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Interpretation of results &rarr;
+            </a>
+          </p>
+
+          {% block body %}{% endblock %}
+
+          {% block error %}
+          {% if error %}
+          <div class="alert alert-danger mt-3" role="alert">
+            {{ error }}
+          </div>
+          {% endif %}
+          {% endblock %}
+        </div>
       </div>
-  <br><strong>Paypal:</strong>
-      <form action="https://www.paypal.com/donate" method="post" target="_top">
-        <input type="hidden" name="hosted_button_id" value="QHZ9BSL65X88S" />
-        <input
-          type="image"
-          src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"
-          border="0"
-          name="submit"
-          title="PayPal - The safer, easier way to pay online!"
-          alt="Donate with PayPal button"
-        />
-      </form>
-<!-- Crypto Donations (minimal version) -->
-<div style="font-size: 14px;">
-  <strong>Or donate crypto:</strong><br>
 
-  <!-- Ethereum / Base -->
-  <div style="margin-bottom: 2px;">
-    <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" width="24" height="24" style="vertical-align: middle;">
-    <strong>Ethereum / Base:</strong><br>
-    <code id="eth-address" style="word-break: break-all;">0xBA1903cEb50F92dDBde94498D14cdCc31fEFB7f9</code>
-    <button onclick="copyToClipboard('eth-address')" style="margin-left: 10px; font-size: 12px;">Copy</button>
-  </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          {% block chart %}{% endblock %}
+        </div>
+      </div>
 
-  <!-- Solana -->
-  <div>
-    <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" width="24" height="24" style="vertical-align: middle;">
-    <strong>Solana:</strong><br>
-    <code id="sol-address" style="word-break: break-all;">GrXWomqeGMzAcCCbYQ1Qq32t9qtsrsr4bTZTNcar1QLQ</code>
-    <button onclick="copyToClipboard('sol-address')" style="margin-left: 10px; font-size: 12px;">Copy</button>
-  </div>
+      <hr class="my-4" />
 
-  <script>
-    function copyToClipboard(id) {
-      const text = document.getElementById(id).innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Copied to clipboard!');
-      });
-    }
-  </script>
-</div>
+      <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+          <strong>Support via PayPal:</strong>
+          <form action="https://www.paypal.com/donate" method="post" target="_top" class="mt-2">
+            <input type="hidden" name="hosted_button_id" value="QHZ9BSL65X88S" />
+            <input
+              type="image"
+              src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif"
+              border="0"
+              name="submit"
+              title="PayPal - The safer, easier way to pay online!"
+              alt="Donate with PayPal button"
+            />
+          </form>
+        </div>
+
+        <div class="col-md-6" style="font-size: 14px;">
+          <strong>Donate crypto:</strong><br />
+
+          <!-- Ethereum / Base -->
+          <div class="mt-2" style="margin-bottom: 6px;">
+            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" width="20" height="20" style="vertical-align: middle;" />
+            <strong>Ethereum / Base:</strong><br />
+            <code id="eth-address" style="word-break: break-all;">0xBA1903cEb50F92dDBde94498D14cdCc31fEFB7f9</code>
+            <button class="btn btn-sm btn-outline-secondary py-0 px-2 ms-2" onclick="copyToClipboard('eth-address')" style="font-size: 12px;">Copy</button>
+          </div>
+
+          <!-- Solana -->
+          <div class="mt-2">
+            <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="SOL" width="20" height="20" style="vertical-align: middle;" />
+            <strong>Solana:</strong><br />
+            <code id="sol-address" style="word-break: break-all;">GrXWomqeGMzAcCCbYQ1Qq32t9qtsrsr4bTZTNcar1QLQ</code>
+            <button class="btn btn-sm btn-outline-secondary py-0 px-2 ms-2" onclick="copyToClipboard('sol-address')" style="font-size: 12px;">Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function copyToClipboard(id) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+          alert('Copied to clipboard!');
+        });
+      }
+    </script>
   </body>
 </html>

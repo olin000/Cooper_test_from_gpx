@@ -11,8 +11,6 @@ build/
 develop-eggs/
 dist/
 eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -45,6 +43,8 @@ coverage.xml
 # Django stuff:
 *.log
 *.pot
+*.sqlite3
+db.sqlite3
 
 # Sphinx documentation
 docs/_build/

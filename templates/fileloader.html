@@ -1,24 +1,35 @@
-{% extends "base.html" %} {% block body %}
+{% extends "base.html" %}
 
-<form id="upload-form" method="post" enctype="multipart/form-data">
+{% block body %}
+<form id="upload-form" method="post" enctype="multipart/form-data" class="card p-3 shadow-sm bg-light">
   {% csrf_token %}
-  <input type="file" name="gpxfile" accept=".gpx" required />
-  <br />
-  <br />
-  <input type="submit" name="submit" value="Upload gpx" />
+  <div class="mb-3">
+    <label for="gpxfile" class="form-label fw-semibold">Upload your GPX file:</label>
+    <input class="form-control" type="file" id="gpxfile" name="gpxfile" accept=".gpx" required />
+    <div class="form-text">GPX files with at least 12 minutes of GPS data are supported.</div>
+  </div>
+  <div>
+    <button type="submit" id="submit-btn" class="btn btn-primary">
+      Analyse GPX
+    </button>
+  </div>
 </form>
 
-<div id="message" style="display: none">
-  Processing the file, please wait...
+<div id="message" class="alert alert-info mt-3" style="display: none;" role="status">
+  <div class="d-flex align-items-center">
+    <div class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></div>
+    <span>Processing GPX file, please wait...</span>
+  </div>
 </div>
+
 <script>
   document
     .getElementById("upload-form")
-    .addEventListener("submit", function (e) {
-      // Show the processing message
+    .addEventListener("submit", function () {
       document.getElementById("message").style.display = "block";
-      // Allow the form to continue submitting
+      var btn = document.getElementById("submit-btn");
+      btn.disabled = true;
+      btn.innerText = "Analyzing...";
     });
 </script>
-
 {% endblock %}

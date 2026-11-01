@@ -1,2 +1,21 @@
-{% extends "fileloader.html" %} {% block chart %}Generated chart below:
-{{chart|safe}} {%endblock %}
+{% extends "fileloader.html" %}
+
+{% block chart %}
+{% if chart %}
+<div class="card shadow-sm mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Generated Cooper Test Analysis</h5>
+    {% if max_value %}
+    <p class="card-text text-muted mb-3">
+      <span class="badge bg-primary fs-6 me-2">Fastest 12m: {{ max_value }} m</span>
+      <span class="badge bg-success fs-6 me-2">Estimated VO2max: {{ vo2max }} ml/kg/min</span>
+      <span class="badge bg-secondary fs-6">Total Distance: {{ total_distance }} m</span>
+    </p>
+    {% endif %}
+    <div class="chart-wrapper">
+      {{ chart|safe }}
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
